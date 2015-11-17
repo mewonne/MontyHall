@@ -1,0 +1,4 @@
+/out:bin/MontyHall.exe
+/target:exe
+Program.cs
+MontyHall.cs
