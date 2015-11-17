@@ -13,6 +13,7 @@ namespace MontyHallGame
 		{
 			var mh = new MontyHall();
 			Console.WriteLine(mh.ToString());
+			mh.Start();
 			Console.ReadKey();
 		}
 	}
