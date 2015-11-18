@@ -8,9 +8,12 @@ namespace MontyHallGame
 		const int MaxCountAnswer = 3;
 		
 		enum TypeAnswer {BetterProb = 1, WorseProb, EqualProb};
+		
+		private ConsoleGraphic _cg;
 				
 		public MontyHall()
 		{
+			_cg = new ConsoleGraphic();
 		}	
 		
 		public override string ToString()
@@ -18,18 +21,25 @@ namespace MontyHallGame
 			return "Monty Hall's paradox";
 		} 
 		
-		public void Start()
+		public void Process()
 		{
-			this.Process();
-		}
-		private void Process()
-		{
-			Console.WriteLine("___________________________________________________________________\n");
+			_cg.DrawLine();
 			Console.WriteLine(
 							  "Парадокс Монти Холла — одна из известных задач теории вероятностей,\n" + 
 							  "решение которой, на первый взгляд, противоречит здравому смыслу.   \n"
 							 );
-		   Console.WriteLine("___________________________________________________________________\n");
+		    _cg.DrawLine();
+		   
+			this.Quiz();
+			
+			Console.WriteLine();
+			Console.WriteLine("Хотите сыграть в игру и сами убедиться в увеличении шансов на победу\n" +
+							  "при смене двери?");
+			
+		}
+				
+		private void Quiz()
+		{
 		   Console.WriteLine(
 			   				 "Представьте, что вы стали участником игры, в которой вам нужно\n" +  
 							 "выбрать одну из трёх дверей. За одной из дверей находится автомобиль,\n" + 
@@ -155,6 +165,11 @@ namespace MontyHallGame
 				default:
 					break;					
 			}
+		}
+		
+		private void GameMontyHall()
+		{
+						
 		}
 	}
 }

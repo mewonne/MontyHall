@@ -1,4 +1,5 @@
 /out:bin/MontyHall.exe
 /target:exe
 Program.cs
+ConsoleGraphic.cs
 MontyHall.cs
