@@ -9,11 +9,18 @@ namespace MontyHallGame
 		
 		enum TypeAnswer {BetterProb = 1, WorseProb, EqualProb};
 		
+		private Random _rndPrize;
+		private int _numGames;
+		private int _numSucсessGames;
+		
 		private ConsoleGraphic _cg;
 				
 		public MontyHall()
 		{
 			_cg = new ConsoleGraphic();
+			_rndPrize = new Random();
+			_numGames = 0;
+			_numSucсessGames = 0;
 		}	
 		
 		public override string ToString()
@@ -35,22 +42,28 @@ namespace MontyHallGame
 			Console.WriteLine();
 			Console.WriteLine("Хотите сыграть в игру и сами убедиться в увеличении шансов на победу\n" +
 							  "при смене двери?");
-			
+			Console.Write(@"Да\Нет: ");
+			var answer = Console.ReadLine();
+			if(answer.Trim().ToUpper().Equals("ДА"))
+			{
+				Console.WriteLine();
+				this.GameMontyHall();
+			}
 		}
 				
 		private void Quiz()
 		{
 		   Console.WriteLine(
 			   				 "Представьте, что вы стали участником игры, в которой вам нужно\n" +  
-							 "выбрать одну из трёх дверей. За одной из дверей находится автомобиль,\n" + 
-							 "за двумя другими дверями — козы. Вы выбираете одну из дверей,\n" + 
+							 "выбрать одну из трёх дверей. За одной из дверей находится подарок,\n" + 
+							 "за двумя другими дверьми — ничего. Вы выбираете одну из дверей,\n" + 
 							 "например, номер 1, после этого ведущий, который знает, где находится\n" + 
-							 "автомобиль, а где — козы, открывает одну из оставшихся дверей,\n" + 
-							 "например, номер 3, за которой находится коза. После этого он\n" + 
+							 "подарок, а где — ничего нет, открывает одну из оставшихся дверей,\n" + 
+							 "например, номер 3, за которой пустота. После этого он\n" + 
 							 "спрашивает вас — не желаете ли вы изменить свой выбор и выбрать\n" + 
 							 "дверь номер 2?\n" +
 							 "\n" + 
-							 "Увеличатся ли ваши шансы выиграть автомобиль,\n" + 
+							 "Увеличатся ли ваши шансы выиграть подарок,\n" + 
 							 "если вы примете предложение ведущего и измените свой выбор?"
 		   					);
 			Console.WriteLine();
@@ -169,6 +182,21 @@ namespace MontyHallGame
 		
 		private void GameMontyHall()
 		{
+			var succesChoice = _rndPrize.Next(1, 4).ToString();
+						
+			Console.WriteLine("Выбирите одну из трех дверей. \n" + 
+							  "Только за одной из них вы сможете найти приз!"
+							  );
+			_cg.DrawClosedDoors();	
+			Console.WriteLine();
+			Console.Write("Вы выбираете дверь с номером: ");
+			Console.WriteLine();
+			var choice = Console.ReadLine();
+			_cg.DrawSelectedDoors((string)choice);
+			
+			Console.WriteLine();
+			Console.WriteLine("Ведущий открывает пустую дверь из двух оставшихся:");
+			
 						
 		}
 	}
