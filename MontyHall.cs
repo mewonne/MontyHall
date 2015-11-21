@@ -14,6 +14,7 @@ namespace MontyHallGame
 		private int _numSucсessGames;
 		
 		private ConsoleGraphic _cg;
+		private int[] _nDoors;
 				
 		public MontyHall()
 		{
@@ -21,6 +22,7 @@ namespace MontyHallGame
 			_rndPrize = new Random();
 			_numGames = 0;
 			_numSucсessGames = 0;
+			_nDoors = new int[]{ 1, 2, 3 };
 		}	
 		
 		public override string ToString()
@@ -28,12 +30,13 @@ namespace MontyHallGame
 			return "Monty Hall's paradox";
 		} 
 		
+		
 		public void Process()
 		{
 			_cg.DrawLine();
 			Console.WriteLine(
 							  "Парадокс Монти Холла — одна из известных задач теории вероятностей,\n" + 
-							  "решение которой, на первый взгляд, противоречит здравому смыслу.   \n"
+							  "решение которой, на первый взгляд, противоречит здравому смыслу.\n"
 							 );
 		    _cg.DrawLine();
 		   
@@ -42,10 +45,13 @@ namespace MontyHallGame
 			Console.WriteLine();
 			Console.WriteLine("Хотите сыграть в игру и сами убедиться в увеличении шансов на победу\n" +
 							  "при смене двери?");
+							  
 			Console.Write(@"Да\Нет: ");
 			var answer = Console.ReadLine();
 			if(answer.Trim().ToUpper().Equals("ДА"))
 			{
+				MixingElems(_nDoors);
+				
 				Console.WriteLine();
 				this.GameMontyHall();
 			}
@@ -182,7 +188,7 @@ namespace MontyHallGame
 		
 		private void GameMontyHall()
 		{
-			var succesChoice = _rndPrize.Next(1, 4).ToString();
+			var succesChoice = _rndPrize.Next(1, 4);
 						
 			Console.WriteLine("Выбирите одну из трех дверей. \n" + 
 							  "Только за одной из них вы сможете найти приз!"
@@ -190,14 +196,49 @@ namespace MontyHallGame
 			_cg.DrawClosedDoors();	
 			Console.WriteLine();
 			Console.Write("Вы выбираете дверь с номером: ");
-			Console.WriteLine();
-			var choice = Console.ReadLine();
-			_cg.DrawSelectedDoors((string)choice);
-			
-			Console.WriteLine();
-			Console.WriteLine("Ведущий открывает пустую дверь из двух оставшихся:");
-			
-						
+			var userChoiceStr = Console.ReadLine();
+			int userChoice; 
+			var parse = Int32.TryParse(userChoiceStr, out userChoice);
+
+		    if(parse && (userChoice >= 1 && userChoice <= 3))
+			{
+				_cg.DrawSelectedDoors(userChoice);
+				
+				Console.WriteLine();
+				Console.WriteLine("Ведущий открывает пустую дверь из двух оставшихся:");
+				
+				var nOpenDoor = 0;
+				
+				foreach(var nDoor in _nDoors)
+				{
+					if(nDoor != succesChoice && nDoor != userChoice)
+					{
+						nOpenDoor = nDoor;
+						break;
+					}
+				}
+				_cg.DrawOpenDoors(nOpenDoor);
+				
+				Console.WriteLine("succesChoice: {0}", succesChoice);
+				Console.WriteLine("userChoice: {0}", userChoice);
+				Console.WriteLine("nOpenDoor: {0}", nOpenDoor);
+			}
+			else
+			{
+				Console.WriteLine("Нужно было ввести 1,2 или 3!");
+			}
+		}
+		
+		private void MixingElems(int[] array)
+		{
+			var rand = new Random();
+			for (int i = array.Length - 1; i >= 0; i--) 
+			{
+				int j = rand.Next(i);
+				var temp = array[i];
+				array[i] = array[j];
+				array[j] = temp;
+			}
 		}
 	}
 }

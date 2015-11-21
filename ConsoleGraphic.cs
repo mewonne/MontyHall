@@ -1,9 +1,10 @@
 using System;
+using System.IO;
 
 namespace MontyHallGame
 {
 	class ConsoleGraphic
-	{
+	{		
 		public ConsoleGraphic()
 		{
 			
@@ -11,7 +12,7 @@ namespace MontyHallGame
 		
 		public void DrawLine()
 		{
-			Console.WriteLine(@"___________________________________________________________________\n");
+			Console.WriteLine("___________________________________________________________________");
 		}
 		
 		public void DrawLine(int length)
@@ -28,7 +29,7 @@ namespace MontyHallGame
 			Console.WriteLine(@"| Дверь №1  |	| Дверь №2  |	| Дверь №3  |");
 			Console.WriteLine(@"|           |	|           |	|           |");
 			Console.WriteLine(@"|           |	|           |	|           |");
-			Console.WriteLine(@"|o          |	|o          |	|o          |");
+			Console.WriteLine(@"|O          |	|O          |	|O          |");
 			Console.WriteLine(@"|           |	|           |	|           |");
 			Console.WriteLine(@"|           |	|           |	|           |");
 			Console.WriteLine(@"|           |	|           |	|           |");
@@ -36,43 +37,40 @@ namespace MontyHallGame
 			Console.WriteLine(@"=============	=============	=============");		
 		}
 		
-		public void DrawSelectedDoors(string variant)
+		public void DrawSelectedDoors(int variant)
 		{
 			switch (variant)
 			{
-				case "1" :
-				case "№1":
+				case 1:
 					Console.WriteLine(@"=============	=============	=============");
 					Console.WriteLine(@"| Дверь №1  |	| Дверь №2  |	| Дверь №3  |");
 					Console.WriteLine(@"|           |	|           |	|           |");
 					Console.WriteLine(@"|           |	|           |	|           |");
-					Console.WriteLine(@"|o          |	|o          |	|o          |");
+					Console.WriteLine(@"|O          |	|O          |	|O          |");
 					Console.WriteLine(@"|    _  /   |	|           |	|           |");
 					Console.WriteLine(@"|     \/    |	|           |	|           |");
 					Console.WriteLine(@"|           |	|           |	|           |");
 					Console.WriteLine(@"|           |	|           |	|           |");
 					Console.WriteLine(@"=============	=============	=============");
 					break;
-				case "2" :
-				case "№2":
+				case 2:
 					Console.WriteLine(@"=============	=============	=============");
 					Console.WriteLine(@"| Дверь №1  |	| Дверь №2  |	| Дверь №3  |");
 					Console.WriteLine(@"|           |	|           |	|           |");
 					Console.WriteLine(@"|           |	|           |	|           |");
-					Console.WriteLine(@"|o          |	|o          |	|o          |");
+					Console.WriteLine(@"|O          |	|O          |	|O          |");
 					Console.WriteLine(@"|           |	|    _  /   |	|           |");
 					Console.WriteLine(@"|           |	|     \/    |	|           |");
 					Console.WriteLine(@"|           |	|           |	|           |");
 					Console.WriteLine(@"|           |	|           |	|           |");
 					Console.WriteLine(@"=============	=============	=============");
 					break;
-				case "3" :
-				case "№3":
+				case 3:
 					Console.WriteLine(@"=============	=============	=============");
 					Console.WriteLine(@"| Дверь №1  |	| Дверь №2  |	| Дверь №3  |");
 					Console.WriteLine(@"|           |	|           |	|           |");
 					Console.WriteLine(@"|           |	|           |	|           |");
-					Console.WriteLine(@"|o          |	|o          |	|o          |");
+					Console.WriteLine(@"|O          |	|O          |	|O          |");
 					Console.WriteLine(@"|           |	|           |	|   _  /    |");
 					Console.WriteLine(@"|           |	|           |	|    \/     |");
 					Console.WriteLine(@"|           |	|           |	|           |");
@@ -84,7 +82,50 @@ namespace MontyHallGame
 			}	
 		}
 		
-		
+		public void DrawOpenDoors(int variant)
+		{
+			switch (variant)
+			{
+				case 1:
+					Console.WriteLine(@"=============	=============	=============");
+					Console.WriteLine(@"|  Пустая / |	| Дверь №2  |	| Дверь №3  |");
+					Console.WriteLine(@"| Дверь №1| |	|           |	|           |");
+					Console.WriteLine(@"|         | |	|           |	|           |");
+					Console.WriteLine(@"|         |o|	|O          |	|O          |");
+					Console.WriteLine(@"|  Открыта| |	|           |	|           |");
+					Console.WriteLine(@"|         | |	|           |	|           |");
+					Console.WriteLine(@"|         | |	|           |	|           |");
+					Console.WriteLine(@"|         \ |	|           |	|           |");
+					Console.WriteLine(@"=============	=============	=============");
+					break;
+				case 2:
+					Console.WriteLine(@"=============	=============	=============");
+					Console.WriteLine(@"| Дверь №1  |	|  Пустая / |	| Дверь №3  |");
+					Console.WriteLine(@"|           |	| Дверь №2| |	|           |");
+					Console.WriteLine(@"|           |	|         | |	|           |");
+					Console.WriteLine(@"|O          |	|         |o|	|O          |");
+					Console.WriteLine(@"|           |	|  Открыта| |	|           |");
+					Console.WriteLine(@"|           |	|         | |	|           |");
+					Console.WriteLine(@"|           |	|         | |	|           |");
+					Console.WriteLine(@"|           |	|         \ |	|           |");
+					Console.WriteLine(@"=============	=============	=============");
+					break;
+				case 3:
+					Console.WriteLine(@"=============	=============	=============");
+					Console.WriteLine(@"| Дверь №1  |	| Дверь №2  |	|  Пустая / |");
+					Console.WriteLine(@"|           |	|           |	| Дверь №3| |");
+					Console.WriteLine(@"|           |	|           |	|         | |");
+					Console.WriteLine(@"|O          |	|O          |	|         |o|");
+					Console.WriteLine(@"|           |	|           |	|  Открыта| |");
+					Console.WriteLine(@"|           |	|           |	|         | |");
+					Console.WriteLine(@"|           |	|           |	|         | |");
+					Console.WriteLine(@"|           |	|           |	|         \ |");
+					Console.WriteLine(@"=============	=============	=============");
+					break;
+				default:
+					break;
+			}	
+		}
 		
 	}
 }
