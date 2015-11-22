@@ -11,9 +11,7 @@ namespace MontyHallGame
 		static void Main(string[] args)
 		{			
 			var mh = new MontyHall();
-			Console.WriteLine(mh.ToString());
 			mh.Process();
-			Console.ReadKey();
 		}
 	}
 }

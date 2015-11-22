@@ -43,17 +43,31 @@ namespace MontyHallGame
 			this.Quiz();
 			
 			Console.WriteLine();
+			_cg.DrawLine();
 			Console.WriteLine("Хотите сыграть в игру и сами убедиться в увеличении шансов на победу\n" +
 							  "при смене двери?");
 							  
 			Console.Write(@"Да\Нет: ");
 			var answer = Console.ReadLine();
-			if(answer.Trim().ToUpper().Equals("ДА"))
+			if(answer.Trim().ToUpper().Equals("ДА") || answer.Trim().ToUpper().Equals("YES"))
 			{
-				MixingElems(_nDoors);
+				var playAgain = true;
 				
-				Console.WriteLine();
-				this.GameMontyHall();
+				while(playAgain)
+				{
+					MixingElems(_nDoors);
+					
+					Console.WriteLine();
+					this.GameMontyHall();
+					Console.WriteLine();
+					
+					Console.Write(@"Играть заново? (Да\Нет): ");
+					answer = Console.ReadLine();
+					if(!answer.Trim().ToUpper().Equals("ДА") && !answer.Trim().ToUpper().Equals("YES"))
+					{
+						playAgain = false;
+					}
+				}
 			}
 		}
 				
@@ -93,6 +107,7 @@ namespace MontyHallGame
 				if(counterAnswer >= MaxCountAnswer)
 				{
 					correctChoice = true;
+					Console.WriteLine();
 					this.ShowAnswer((int)TypeAnswer.WorseProb);
 				} 
 			}
@@ -127,8 +142,6 @@ namespace MontyHallGame
 					this.ShowAnswer((int)TypeAnswer.EqualProb);
 					break;
 				default:
-					Console.WriteLine();
-					Console.WriteLine("Введите один из предложенных ответов.");
 					correctChoice = false;
 					break;
 			}
@@ -193,19 +206,26 @@ namespace MontyHallGame
 			Console.WriteLine("Выбирите одну из трех дверей. \n" + 
 							  "Только за одной из них вы сможете найти приз!"
 							  );
+			Console.WriteLine();
+							  
 			_cg.DrawClosedDoors();	
 			Console.WriteLine();
+			
 			Console.Write("Вы выбираете дверь с номером: ");
 			var userChoiceStr = Console.ReadLine();
 			int userChoice; 
 			var parse = Int32.TryParse(userChoiceStr, out userChoice);
 
+			Console.WriteLine();
+				
 		    if(parse && (userChoice >= 1 && userChoice <= 3))
 			{
+				_numGames++;
 				_cg.DrawSelectedDoors(userChoice);
 				
 				Console.WriteLine();
-				Console.WriteLine("Ведущий открывает пустую дверь из двух оставшихся:");
+				Console.WriteLine("Ведущий открывает пустую дверь из двух оставшихся...");
+				Console.WriteLine();
 				
 				var nOpenDoor = 0;
 				
@@ -219,9 +239,60 @@ namespace MontyHallGame
 				}
 				_cg.DrawOpenDoors(nOpenDoor);
 				
-				Console.WriteLine("succesChoice: {0}", succesChoice);
-				Console.WriteLine("userChoice: {0}", userChoice);
-				Console.WriteLine("nOpenDoor: {0}", nOpenDoor);
+				Console.WriteLine();
+				Console.WriteLine(@"... и предлагает вам выбрать заново.");
+				Console.WriteLine();
+				Console.Write(@"Хотите изменить свой предыдущий выбор? (Да\Нет):");
+				
+				var answer = Console.ReadLine();
+				
+				Console.WriteLine();
+				
+				if(answer.Trim().ToUpper().Equals("ДА") || answer.Trim().ToUpper().Equals("YES"))
+				{				
+					foreach(var nDoor in _nDoors)
+					{
+						if(nDoor != nOpenDoor && nDoor != userChoice)
+						{
+							userChoice = nDoor;
+							break;
+						}
+					}
+					Console.WriteLine("Хорошо. Теперь вы выбрали дверь с номером {0}.", userChoice);
+				}
+				else
+				{
+					Console.WriteLine("Хорошо. Вы остались при своем выборе.");
+				}
+				Console.WriteLine();
+				
+				_cg.DrawOpenAndSelectedDoors(nOpenDoor, userChoice);
+				
+				Console.WriteLine();
+				Console.WriteLine("Ведущий открывает все двери...");
+				Console.WriteLine();
+				
+				_cg.DrawPrizeDoors(succesChoice);
+				Console.WriteLine();
+				
+				if(userChoice == succesChoice)
+				{
+					Console.WriteLine("Ура! Вы угадали! Можете забрать приз!");
+					_numSucсessGames++;
+				}
+				else
+				{
+					Console.WriteLine("Увы. Вы не угадали.");
+				}
+				
+				Console.WriteLine();
+				_cg.DrawLine();
+				Console.WriteLine("Статистика игр");
+				Console.WriteLine("Количество игр:\t\t{0}", _numGames);
+				Console.WriteLine("Количество удачных игр: {0}", _numSucсessGames);
+				var procentSuccessGames = (double)_numSucсessGames/(double)_numGames;
+				Console.WriteLine("Процент удачных игр:\t{0}%", procentSuccessGames*100);
+				_cg.DrawLine();
 			}
 			else
 			{
