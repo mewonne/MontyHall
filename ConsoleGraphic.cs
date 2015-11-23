@@ -3,7 +3,7 @@ using System.IO;
 
 namespace MontyHallGame
 {
-	class ConsoleGraphic
+	public sealed class ConsoleGraphic
 	{		
 		public ConsoleGraphic()
 		{

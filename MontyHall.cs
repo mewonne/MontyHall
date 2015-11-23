@@ -2,7 +2,7 @@ using System;
 
 namespace MontyHallGame
 {
-	class MontyHall
+	public sealed class MontyHall
 	{
 		
 		const int MaxCountAnswer = 3;
